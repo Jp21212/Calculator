@@ -1,29 +1,50 @@
-// Get the display element where the calculation is shown
-let display = document.getElementById('display');
+// Get the elements
+const screen = document.getElementById("screen");
+const buttons = document.querySelectorAll(".button");
+let currentInput = "";
+let rotateInterval;
 
-// Function to append a number to the display
-function appendNumber(number) {
-    display.value += number; // Concatenate the number to the display value
-}
+// Do button click
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    const buttonText = button.innerText;
 
-// Function to append an operator (+, -, *, /) to the display
-function appendOperator(operator) {
-    display.value += ' ' + operator + ' '; // Add spaces around the operator for readability
-}
-
-// Function to clear the display when the 'C' button is pressed
-function clearDisplay() {
-    display.value = ''; // Reset the display to an empty string
-}
-
-// Function to calculate the result of the expression entered
-function calculate() {
-    try {
-        // Use the eval() function to evaluate the expression entered in the display
-        // The regex is used to remove any invalid characters to prevent security risks
-        display.value = eval(display.value.replace(/[^-()\d/*+.]/g, ''));
-    } catch (error) {
-        // If there's an error in the expression (e.g., incomplete input), show 'Error'
-        display.value = 'Error';
+    // Do clear button
+    if (buttonText === "C") {
+      currentInput = "";
+      screen.innerText = "0";
     }
-}
+
+    // Do self-destruct button
+    else if (buttonText === "Self Destruct") {
+      alert("Self Destruct initiated!");
+      document.body.innerHTML = "<h1>BOOM!</h1><p>The calculator has self-destructed!</p>";
+    }
+
+    // Do rotate button
+    else if (buttonText === "Rotate Forever") {
+      if (rotateInterval) {
+        clearInterval(rotateInterval);  // Stop rotation if it's already rotating
+        rotateInterval = null;
+      } else {
+        rotateInterval = setInterval(() => {
+          document.body.style.transform = `rotate(${(parseInt(document.body.style.transform.replace("rotate(", "").replace("deg)", "")) || 0) + 1}deg)`;
+        }, 10);
+      }
+    }
+
+    // Do number buttons and operators
+    else if (buttonText === "=") {
+      try {
+        currentInput = eval(currentInput).toString();
+        screen.innerText = currentInput;
+      } catch (e) {
+        screen.innerText = "Error";
+      }
+    } else {
+      // Add the button text to the current input
+      currentInput += buttonText;
+      screen.innerText = currentInput;
+    }
+  });
+});

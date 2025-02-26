@@ -1,0 +1,61 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: blue;
+}
+/* Styling the title of my Caculator */
+h1 {
+    font-size: 3em; 
+    text-align: center;
+    margin-bottom: 700px; 
+    color: #333;  
+}
+/* Styling for the calculator container */
+.calculator {
+    width: 260px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for the display screen */
+#display {
+    width: 95%;
+    height: 50px;
+    font-size: 2em;
+    text-align: right;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Layout for the calculator buttons */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* Styling for buttons */
+button {
+    padding: 20px;
+    font-size: 1.5em;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #ddd;
+}

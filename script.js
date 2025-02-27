@@ -1,50 +1,62 @@
-// Get the elements
-const screen = document.getElementById("screen");
-const buttons = document.querySelectorAll(".button");
-let currentInput = "";
-let rotateInterval;
+let isRotating = false;
+let isDancing = false;
+let isShaking = false;
+let display = document.getElementById("display");
+let calculator = document.getElementById("calculator");
 
-// Do button click
-buttons.forEach(button => {
-  button.addEventListener("click", () => {
-    const buttonText = button.innerText;
+// Function to append numbers to the display
+function appendNumber(number) {
+    display.value += number;
+}
 
-    // Do clear button
-    if (buttonText === "C") {
-      currentInput = "";
-      screen.innerText = "0";
+// Function to append operators to the display
+function appendOperator(operator) {
+    display.value += " " + operator + " ";
+}
+
+// Function to clear the screen
+function clearScreen() {
+    display.value = "";
+}
+
+// Function to calculate the result of the expression
+function calculateResult() {
+    try {
+        display.value = eval(display.value);
+    } catch {
+        display.value = "Error";
     }
+}
 
-    // Do self-destruct button
-    else if (buttonText === "Self Destruct") {
-      alert("Self Destruct initiated!");
-      document.body.innerHTML = "<h1>BOOM!</h1><p>The calculator has self-destructed!</p>";
-    }
+// Function for self-destruct (shake the calculator and remove it)
+function selfDestruct() {
+    if (isShaking) return; // Prevent multiple self-destruct triggers
 
-    // Do rotate button
-    else if (buttonText === "Rotate Forever") {
-      if (rotateInterval) {
-        clearInterval(rotateInterval);  // Stop rotation if it's already rotating
-        rotateInterval = null;
-      } else {
-        rotateInterval = setInterval(() => {
-          document.body.style.transform = `rotate(${(parseInt(document.body.style.transform.replace("rotate(", "").replace("deg)", "")) || 0) + 1}deg)`;
-        }, 10);
-      }
-    }
+    isShaking = true;
+    calculator.style.animation = "shake 0.5s infinite";
+    setTimeout(() => {
+        calculator.style.display = "none"; // Remove the calculator after shaking
+    }, 2000);
+}
 
-    // Do number buttons and operators
-    else if (buttonText === "=") {
-      try {
-        currentInput = eval(currentInput).toString();
-        screen.innerText = currentInput;
-      } catch (e) {
-        screen.innerText = "Error";
-      }
+// Function to rotate the calculator
+function rotateCalculator() {
+    if (isRotating) {
+        calculator.style.animation = ""; // Stop rotating
+        isRotating = false;
     } else {
-      // Add the button text to the current input
-      currentInput += buttonText;
-      screen.innerText = currentInput;
+        calculator.style.animation = "rotate 2s linear infinite"; // Start rotating
+        isRotating = true;
     }
-  });
-});
+}
+
+// Function for the dance party effect
+function danceParty() {
+    if (isDancing) {
+        document.body.style.animation = ""; // Stop dancing
+        isDancing = false;
+    } else {
+        document.body.style.animation = "danceParty 1s infinite"; // Start dance party
+        isDancing = true;
+    }
+}

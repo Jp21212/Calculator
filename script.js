@@ -4,12 +4,12 @@ let isShaking = false;
 let display = document.getElementById("display");
 let calculator = document.getElementById("calculator");
 
-// Function to append numbers to the display
+// Function to add numbers to the display
 function appendNumber(number) {
     display.value += number;
 }
 
-// Function to append operators to the display
+// Function to add operators to the display
 function appendOperator(operator) {
     display.value += " " + operator + " ";
 }
@@ -28,9 +28,9 @@ function calculateResult() {
     }
 }
 
-// Function for self-destruct (shake the calculator and remove it)
+// Function for self-destruct 
 function selfDestruct() {
-    if (isShaking) return; // Prevent multiple self-destruct triggers
+    if (isShaking) return; 
 
     isShaking = true;
     calculator.style.animation = "shake 0.5s infinite";
